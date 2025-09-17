@@ -1,0 +1,58 @@
+{% assign avg_rating = block.settings.product.metafields.demo.avg_rating.value | round %}
+<span class="star-rating" style="color:{{ block.settings.colour }}">
+  {% render 'stars', rating: avg_rating %}
+</span>
+
+{% if avg_rating >= 4 %}
+  <br>
+  <img src="{{ 'thumbs-up.png' | asset_img_url: '15x' }}" class="thumbs-up" alt="Thumbs up" loading="lazy">
+  <span class="recommendation-text">{{ 'ratings.home.recommendationText' | t }}</span>
+{% endif %}
+
+<style>
+/* General Styling */
+.star-rating {
+  display: inline-block;
+  font-size: 1.2em;
+  margin-right: 8px;
+}
+
+/* Styling for thumbs-up icon */
+.thumbs-up {
+  vertical-align: middle;
+  margin-left: 5px;
+  display: inline-block;
+}
+
+/* Recommendation text styling */
+.recommendation-text {
+  font-weight: bold;
+  color: #4CAF50; /* Green color for positive recommendation */
+  font-size: 1em;
+  display: inline-block;
+  margin-left: 10px;
+}
+
+/* Adjusting color based on rating */
+.star-rating span {
+  color: {{ block.settings.colour }}; /* Use the color set in the settings */
+}
+
+/* Optional: For larger or custom star icon sizes */
+.star-rating .icon {
+  font-size: 24px; /* Adjust star icon size */
+}
+
+</style>
+
+{% schema %}
+{
+  "name": "Star Rating",
+  "target": "section",
+  "settings": [
+    { "type": "product", "id": "product", "label": "product", "autofill": true },
+    { "type": "color", "id": "colour", "label": "Star Colour", "default": "#ff0000" }
+  ]
+}
+{% endschema %}
+
